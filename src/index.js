@@ -1,9 +1,11 @@
-var http = require("http");
+//var http = require("http");
+var https = require("https");
 var express = require("express");
 var Mailgun = require("mailgun-js");
 var nodemailer = require("nodemailer");
 var bodyparser = require("body-parser")
 var nodemailerTransport = require("nodemailer-mailgun-transport");
+var fs = require("fs");
 // auth mailgun
 const auth ={
   auth: {
@@ -38,4 +40,18 @@ const auth ={
   
 })
 //create a server object:
-app.listen(8080);
+//app.listen(8080);
+
+app.get('/', (req, res) => {
+    res.send('Hello World');
+});
+
+
+
+
+https.createServer({
+    key: fs.readFileSync('../key.pem'),
+    cert: fs.readFileSync('../cert.pem'),
+    passphrase: 'Bvp88L7SHENZHEN'
+}, app)
+.listen(3000);
